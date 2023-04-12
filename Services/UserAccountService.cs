@@ -1,6 +1,7 @@
 ﻿namespace Online_Bank.Services
 {
-    public class UserAccountService
-    {
-    }
+  public class UserAccountService
+  {
+
+  }
 }

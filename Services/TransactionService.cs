@@ -1,6 +1,7 @@
 ﻿namespace Online_Bank.Services
 {
-    public class TransactionService
-    {
-    }
+  public class TransactionService
+  {
+    
+  }
 }

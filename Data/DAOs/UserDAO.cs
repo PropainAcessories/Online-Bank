@@ -24,7 +24,7 @@ namespace Online_Bank.Data.DAOs
 
     public int GetUserIdFromEmail(string email)
     {
-      UserDTO user = getByEmail(email);
+      UserDTO user = GetByEmail(email);
       if (user == null)
       {
         return 0;
@@ -39,7 +39,7 @@ namespace Online_Bank.Data.DAOs
       return this.clientContext.Users.ToList();
     }
 
-    public UserDTO? getByEmail(string email)
+    public UserDTO? GetByEmail(string email)
     {
       List<UserDTO> userList = GetAll();
       foreach (UserDTO user in userList)
