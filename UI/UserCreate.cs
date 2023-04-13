@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace Online_Bank.UI
 {
@@ -29,7 +30,7 @@ namespace Online_Bank.UI
       }
       return false;
     }
-
+    // Conditional If hell may refactor to switch statement but for now is good
     private void button1_Click(object sender, EventArgs e)
     {
       try
@@ -41,12 +42,93 @@ namespace Online_Bank.UI
             ((TextBox)txt).ForeColor = DefaultForeColor;
           }
         }
-
+        if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtEmail.Text) || string.IsNullOrEmpty(txtPIN.Text) || string.IsNullOrEmpty(txtPhone.Text) || string.IsNullOrEmpty(txtPass.Text))
+        {
+          MessageBox.Show("Please fill out all the fields and try again.");
+        }
+        else if (!Regex.IsMatch(this.txtPin.Text, @"^[\d]{4}$"))
+        {
+          MessageBox.Show("Please make sure your PIN number is Four (4) digits.");
+          this.txtPin.ForeColor = Color.Red;
+        }
+        else if (!IsValidEmail(txtEmail.Text))
+        {
+          MessageBox.Show("Please enter the valid email");
+          this.txtEmail.ForeColor = Color.Red;
+        }
+        else if (!Regex.IsMatch(this.txtPhone.Text, @"^[\d]{3}-[\d]{3}-[\d]{4}$"))
+        {
+          MessageBox.Show("Please enter the format of (000)-555-1234");
+          this.txtPhone.Text.ForeColor = Color.Red;
+        }
+        else if (!Regex.IsMatch(this.txtPass.Text, @"^[\w]{8,}$"))
+        {
+          MessageBox.Show("Your password needs to contain at least 8 characters");
+          this.txtPass.ForeColor = Color.Red;
+        }
+        else if (checkInvalidChar(txtEmail) || checkInvalidChar(txtName))
+        {
+          MessageBox.Show("Those don't go into emails or names.");
+        }
+        else if (!MainService.getInstance().GetUserService().CheckEmailExist(this.txtEmail.Text))
+        {
+          MessageBox.Show("This email already exists!");
+        }
+        else
+        {
+          string fullName = this.txtName.Text;
+          string email = this.txtEmail.Text;
+          int pin = int.Parse(txtPin.Text);
+          this.txtPIN.ForeColor = SystemColors.WindowText;
+          string phone = this.txtPhone.Text;
+          string password = this.txtPass.Text;
+          MainService.getInstance().GetUserService().CreateNewUser(fullName, pin, phone, email, password);
+        }
       }
       catch (Exception ex)
       {
         MessageBox.Show(ex.Message);
       }
+    }
+
+    public static bool IsValidEmail(string emailaddress)
+    {
+      try
+      {
+        MailAddress m = new MailAddress(emailaddress);
+
+        return true;
+      }
+      catch (FormatException)
+      {
+        return false;
+      }
+    }
+
+    private void button2_Click(object sender, EventArgs e)
+    {
+      MainService.getInstance().GetUserService().CloseUserCreationForm();
+      MainService.getInstance().GetUserService().OpenSignInForm();
+    }
+
+    private void button3_Click(object sender, EventArgs e)
+    {
+      this.Close();
+    }
+
+    private void txtName_TextChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    private void txtPIN_TextChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    private void txtPhone_TextChanged(object sender, EventArgs e)
+    {
+
     }
   }
 }
