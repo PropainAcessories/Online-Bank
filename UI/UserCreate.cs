@@ -46,10 +46,10 @@ namespace Online_Bank.UI
         {
           MessageBox.Show("Please fill out all the fields and try again.");
         }
-        else if (!Regex.IsMatch(this.txtPin.Text, @"^[\d]{4}$"))
+        else if (!Regex.IsMatch(this.txtPIN.Text, @"^[\d]{4}$"))
         {
           MessageBox.Show("Please make sure your PIN number is Four (4) digits.");
-          this.txtPin.ForeColor = Color.Red;
+          this.txtPIN.ForeColor = Color.Red;
         }
         else if (!IsValidEmail(txtEmail.Text))
         {
@@ -59,7 +59,7 @@ namespace Online_Bank.UI
         else if (!Regex.IsMatch(this.txtPhone.Text, @"^[\d]{3}-[\d]{3}-[\d]{4}$"))
         {
           MessageBox.Show("Please enter the format of (000)-555-1234");
-          this.txtPhone.Text.ForeColor = Color.Red;
+          this.txtPhone.ForeColor = Color.Red;
         }
         else if (!Regex.IsMatch(this.txtPass.Text, @"^[\w]{8,}$"))
         {
@@ -70,15 +70,15 @@ namespace Online_Bank.UI
         {
           MessageBox.Show("Those don't go into emails or names.");
         }
-        else if (!MainService.getInstance().GetUserService().CheckEmailExist(this.txtEmail.Text))
+        else if (!MainService.getInstance().GetUserService().CheckDuplicateEmail(this.txtEmail.Text))
         {
-          MessageBox.Show("This email already exists!");
+          MessageBox.Show("This Email address already exists!");
         }
         else
         {
           string fullName = this.txtName.Text;
           string email = this.txtEmail.Text;
-          int pin = int.Parse(txtPin.Text);
+          int pin = int.Parse(txtPIN.Text);
           this.txtPIN.ForeColor = SystemColors.WindowText;
           string phone = this.txtPhone.Text;
           string password = this.txtPass.Text;

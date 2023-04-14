@@ -56,13 +56,12 @@ namespace Online_Bank.Services
       this.userDAO.DeleteUser(user);
     }
 
-    public void UpdateUser(UserDTO user, string fullName, int pin, string passwordHash, string email, string phoneNumber)
+    public void UpdateUser(UserDTO user, string fullName, int pin, string email, string phoneNumber)
     {
       user.PIN = pin;
       user.FullName = fullName;
       user.Email = email;
       user.PhoneNumber = phoneNumber;
-      user.PasswordHash = passwordHash;
 
       this.userDAO.SaveModification(user);
       MessageBox.Show("You have Successfully updated your information");
