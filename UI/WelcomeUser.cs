@@ -27,7 +27,7 @@ namespace Online_Bank.UI
 
     public void FillData(UserDTO userDTO)
     {
-      txtID.Text = userDTO.ID.ToString();
+      txtI.Text = userDTO.ID.ToString();
       txtName.Text = userDTO.FullName;
       txtEmail.Text = userDTO.Email;
       txtPIN.Text = userDTO.PIN.ToString();
@@ -78,7 +78,7 @@ namespace Online_Bank.UI
         txtPIN.ReadOnly = true;
         txtPhone.ReadOnly = true;
 
-        int id = int.Parse(this.txtID.Text);
+        int id = int.Parse(this.txtI.Text);
         string fullName = this.txtName.Text;
         int pin = int.Parse(txtPIN.Text);
         string email = this.txtEmail.Text;
@@ -129,29 +129,6 @@ namespace Online_Bank.UI
       }
     }
 
-    private void button4_Click(object sender, EventArgs e)
-    {
-      try
-      {
-        List<AccountDTO> accountList = MainService.getInstance().GetUserAccountService().GetAllUsersAccounts(SignInForm.USERID);
-        try
-        {
-          MainService.getInstance().GetUserAccountService().UnlinkAllAccountFromUser(SignInForm.USERID);
-          UserDTO currentUser = MainService.getInstance().GetUserService().getUserById(SignInForm.USERID);
-          MainService.getInstance().GetUserService().DeleteUser(currentUser);
-          MessageBox.Show("Bye Felicia.");
-          this.Close();
-        }
-        catch (Exception ex)
-        {
-          MessageBox.Show(ex.Message);
-        }
-      }
-      catch (Exception ex)
-      {
-        MessageBox.Show(ex.Message);
-      }
-    }
 
     private void createAccountBtn_Click(object sender, EventArgs e)
     {
@@ -218,6 +195,30 @@ namespace Online_Bank.UI
           {
             LoadAccountFields(this.currentWorkingAccount);
           }
+        }
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(ex.Message);
+      }
+    }
+
+    private void button1_Click(object sender, EventArgs e)
+    {
+      try
+      {
+        List<AccountDTO> accountList = MainService.getInstance().GetUserAccountService().GetAllUsersAccounts(SignInForm.USERID);
+        try
+        {
+          MainService.getInstance().GetUserAccountService().UnlinkAllAccountFromUser(SignInForm.USERID);
+          UserDTO currentUser = MainService.getInstance().GetUserService().getUserById(SignInForm.USERID);
+          MainService.getInstance().GetUserService().DeleteUser(currentUser);
+          MessageBox.Show("Bye Felicia.");
+          this.Close();
+        }
+        catch (Exception ex)
+        {
+          MessageBox.Show(ex.Message);
         }
       }
       catch (Exception ex)
